@@ -1,6 +1,11 @@
-import TodoItem from "./components/TodoItem";
 import TodoForm from "./components/TodoForm";
-import { CloseTodoForm, ViewTodoForm, AddTodo, DeleteTodo } from "./DomActions";
+import {
+	CloseTodoForm,
+	ViewTodoForm,
+	AddTodo,
+	DeleteTodo,
+	MarkAsCompleted,
+} from "./DomActions";
 
 // document
 // 	.querySelector(".todo-container")
@@ -15,3 +20,4 @@ CloseTodoForm();
 ViewTodoForm();
 AddTodo();
 DeleteTodo();
+MarkAsCompleted();

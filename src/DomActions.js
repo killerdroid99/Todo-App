@@ -71,15 +71,29 @@ export const AddTodo = () => {
 
 export const DeleteTodo = () => {
 	const container = document.querySelector(".todo-container");
-	const item = document.querySelector(".item");
 
 	container.addEventListener("click", (e) => {
 		const target = e.target;
-		if (target === document.querySelector(".del")) {
+		if (
+			target.matches(".del") &&
+			target.getAttribute("data-id") ===
+				target.parentElement.getAttribute("data-id")
+		) {
 			target.parentElement.style.animation = "scaleDownEffect 400ms";
 			setTimeout(() => {
-				container.removeChild(target.parentElement);
-			}, 400);
+				target.parentElement.remove();
+			}, 300);
+		}
+	});
+};
+
+export const MarkAsCompleted = () => {
+	const container = document.querySelector(".todo-container");
+
+	container.addEventListener("click", (e) => {
+		const target = e.target;
+		if (target.matches("input[type='checkbox']")) {
+			target.parentElement.classList.toggle("completed");
 		}
 	});
 };
