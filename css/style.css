@@ -445,4 +445,10 @@ nav ul li {
     opacity: 1;
   }
 }
+
+.completed {
+  background: #bebebe;
+  -webkit-filter: grayscale(100%) drop-shadow(5px 5px 3px #3c3c3c);
+          filter: grayscale(100%) drop-shadow(5px 5px 3px #3c3c3c);
+}
 /*# sourceMappingURL=style.css.map */
