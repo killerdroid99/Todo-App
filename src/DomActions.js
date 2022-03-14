@@ -87,6 +87,7 @@ export const DeleteTodo = () => {
 	});
 };
 
+//mark as complete when user selects the checkbox
 export const MarkAsCompleted = () => {
 	const container = document.querySelector(".todo-container");
 
