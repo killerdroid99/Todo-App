@@ -1,5 +1,7 @@
 import TodoItem from "./components/TodoItem";
+import TodoForm from "./components/TodoForm";
 
+// Close the Todo form
 export const CloseTodoForm = () => {
 	const exitBtn = document.getElementById("exit");
 
@@ -12,6 +14,7 @@ export const CloseTodoForm = () => {
 	});
 };
 
+// View the form to add todo item
 export const ViewTodoForm = () => {
 	const addBtn = document.querySelector(".item-placeholder");
 
@@ -23,6 +26,7 @@ export const ViewTodoForm = () => {
 	});
 };
 
+// Add Todo item
 export const AddTodo = () => {
 	const Task = document.getElementById("task");
 	let DateF = document.getElementById("date");
@@ -69,6 +73,7 @@ export const AddTodo = () => {
 	});
 };
 
+// Delete any Todo item
 export const DeleteTodo = () => {
 	const container = document.querySelector(".todo-container");
 
@@ -79,6 +84,7 @@ export const DeleteTodo = () => {
 			target.getAttribute("data-id") ===
 				target.parentElement.getAttribute("data-id")
 		) {
+			console.log("delete");
 			target.parentElement.style.animation = "scaleDownEffect 400ms";
 			setTimeout(() => {
 				target.parentElement.remove();
@@ -87,7 +93,7 @@ export const DeleteTodo = () => {
 	});
 };
 
-//mark as complete when user selects the checkbox
+// Mark as complete when user selects the checkbox
 export const MarkAsCompleted = () => {
 	const container = document.querySelector(".todo-container");
 
@@ -95,6 +101,31 @@ export const MarkAsCompleted = () => {
 		const target = e.target;
 		if (target.matches("input[type='checkbox']")) {
 			target.parentElement.classList.toggle("completed");
+		}
+	});
+};
+
+// Edit any created Todo item
+export const EditTodo = () => {
+	const container = document.querySelector(".todo-container");
+
+	container.addEventListener("click", (e) => {
+		const target = e.target;
+		// let toggle = target.getAttribute("handleToggle");
+		if (
+			target.matches(".edit") &&
+			target.getAttribute("data-id") ===
+				target.parentElement.getAttribute("data-id")
+		) {
+			const form = target.parentElement.lastElementChild;
+
+			if (!form.classList.contains("hideEdit")) {
+				form.classList.add("hideEdit");
+				target.parentElement.style.marginBottom = "";
+			} else if (form.classList.contains("hideEdit")) {
+				form.classList.remove("hideEdit");
+				target.parentElement.style.marginBottom = "2.5rem";
+			}
 		}
 	});
 };

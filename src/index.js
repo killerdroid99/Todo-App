@@ -5,6 +5,7 @@ import {
 	AddTodo,
 	DeleteTodo,
 	MarkAsCompleted,
+	EditTodo,
 } from "./DomActions";
 
 // document
@@ -17,7 +18,8 @@ import {
 document.querySelector("body").appendChild(TodoForm());
 
 CloseTodoForm();
-ViewTodoForm();
+ViewTodoForm(".item-placeholder");
 AddTodo();
 DeleteTodo();
 MarkAsCompleted();
+EditTodo();

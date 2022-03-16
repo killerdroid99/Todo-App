@@ -147,7 +147,7 @@ nav {
 	display: flex;
 	padding-inline: 1em;
 	max-width: 85vw;
-	max-height: 85vh;
+	height: 85vh;
 
 	overflow: auto;
 	flex-direction: column;
@@ -181,6 +181,10 @@ nav {
 
 	h3 {
 		width: 25ch;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		background-color: inherit;
 	}
 
 	h4 {
@@ -191,13 +195,48 @@ nav {
 		width: 25px;
 		height: 25px;
 		accent-color: $primary-color-one;
+		border: 3px solid$primary-color-one;
 		cursor: pointer;
+		appearance: none;
+		border-radius: 5px;
+		&:hover {
+			box-shadow: 0 0 5px $primary-color-two;
+		}
+		&:checked {
+			appearance: revert;
+		}
 	}
 
 	img {
 		width: 30px;
 		cursor: pointer;
 		position: end;
+		transition: 0.3s;
+		&:hover {
+			transform: translateY(-5px);
+		}
+		&:active {
+			transform: translateY(5px);
+		}
+	}
+
+	form {
+		position: fixed;
+		background-color: inherit;
+		opacity: 0.7;
+		bottom: -3em;
+		padding: 0.5em;
+		border-radius: 0.5em;
+		display: flex;
+		align-items: center;
+		gap: 1em;
+		// transform: scale(0%);
+		z-index: 10;
+		input,
+		select {
+			background-color: inherit;
+			border: 2px solid $primary-color-one;
+		}
 	}
 }
 
@@ -331,5 +370,12 @@ nav {
 
 .completed {
 	background: #bebebe;
-	filter: grayscale(100%) drop-shadow(5px 5px 3px #3c3c3c);
+	filter: grayscale(100%) drop-shadow(5px 5px 3px #696969);
+	h3 {
+		text-decoration: line-through 3px;
+	}
+}
+
+.hideEdit {
+	transform: scale(0%);
 }

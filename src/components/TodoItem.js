@@ -1,6 +1,7 @@
 import { v4 } from "uuid";
+import EditForm from "./EditForm";
 
-const TodoItem = (done, text, priority, time) => {
+const TodoItem = (done, text, priority, date) => {
 	const item = document.createElement("div");
 	const checkBox = document.createElement("input");
 	const task = document.createElement("h3");
@@ -13,6 +14,7 @@ const TodoItem = (done, text, priority, time) => {
 	checkBox.type = "checkbox";
 	checkBox.checked = done;
 	task.innerText = text;
+	task.className = "todo-task";
 	selectPriority.innerText = priority;
 	if (priority === "Low") {
 		selectPriority.style.color = "green";
@@ -21,7 +23,8 @@ const TodoItem = (done, text, priority, time) => {
 	} else if (priority === "High") {
 		selectPriority.style.color = "red";
 	}
-	cal.innerText = time;
+	cal.innerText = date;
+	cal.id = "todo-date";
 	del.src = "../assets/close.svg";
 	del.className = "del";
 	edit.src = "../assets/edit.svg";
@@ -30,6 +33,9 @@ const TodoItem = (done, text, priority, time) => {
 	const uuid = v4();
 	item.setAttribute("data-id", `${uuid}`);
 	del.setAttribute("data-id", `${uuid}`);
+	edit.setAttribute("data-id", `${uuid}`);
+	edit.setAttribute("handleToggle", true);
+	task.setAttribute("data-id", `${uuid}`);
 
 	item.append(checkBox);
 	item.appendChild(task);
@@ -37,6 +43,7 @@ const TodoItem = (done, text, priority, time) => {
 	item.appendChild(cal);
 	item.appendChild(edit);
 	item.appendChild(del);
+	item.appendChild(EditForm(task.innerText, `${uuid}`));
 
 	return item;
 };
