@@ -183,7 +183,7 @@ nav ul li {
   display: flex;
   padding-inline: 1em;
   max-width: 85vw;
-  max-height: 85vh;
+  height: 85vh;
   overflow: auto;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -232,6 +232,14 @@ nav ul li {
 
 .item h3 {
   width: 25ch;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: inherit;
 }
 
 .item h4 {
@@ -242,13 +250,64 @@ nav ul li {
   width: 25px;
   height: 25px;
   accent-color: #22577a;
+  border: 3px solid #22577a;
   cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 5px;
+}
+
+.item input[type="checkbox"]:hover {
+  -webkit-box-shadow: 0 0 5px #38a3a5;
+          box-shadow: 0 0 5px #38a3a5;
+}
+
+.item input[type="checkbox"]:checked {
+  -webkit-appearance: revert;
+     -moz-appearance: revert;
+          appearance: revert;
 }
 
 .item img {
   width: 30px;
   cursor: pointer;
   position: end;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.item img:hover {
+  -webkit-transform: translateY(-5px);
+          transform: translateY(-5px);
+}
+
+.item img:active {
+  -webkit-transform: translateY(5px);
+          transform: translateY(5px);
+}
+
+.item form {
+  position: fixed;
+  background-color: inherit;
+  opacity: 0.7;
+  bottom: -3em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1em;
+  z-index: 10;
+}
+
+.item form input,
+.item form select {
+  background-color: inherit;
+  border: 2px solid #22577a;
 }
 
 .item-placeholder {
@@ -448,7 +507,17 @@ nav ul li {
 
 .completed {
   background: #bebebe;
-  -webkit-filter: grayscale(100%) drop-shadow(5px 5px 3px #3c3c3c);
-          filter: grayscale(100%) drop-shadow(5px 5px 3px #3c3c3c);
+  -webkit-filter: grayscale(100%) drop-shadow(5px 5px 3px #696969);
+          filter: grayscale(100%) drop-shadow(5px 5px 3px #696969);
+}
+
+.completed h3 {
+  -webkit-text-decoration: line-through 3px;
+          text-decoration: line-through 3px;
+}
+
+.hideEdit {
+  -webkit-transform: scale(0%);
+          transform: scale(0%);
 }
 /*# sourceMappingURL=style.css.map */

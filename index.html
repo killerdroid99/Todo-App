@@ -45,16 +45,32 @@
     <div class="projects">
         <h1>Project Title</h1>
         <div class="item-placeholder">
-            Add Todo +
+            Add Todo &rarr;
         </div>
         <div class="todo-container">
-            <div class="item">
+            <div class="item" data-id="1">
                 <input type="checkbox">
-                <h3>Task to perform</h3>
+                <h3 class="todo-task">Task to perform
+                </h3>
                 <h4>Priority</h4>
                 <h4>dd/MM/yyyy</h4>
-                <img src="./assets/edit.svg">
-                <img src="./assets/close.svg" class="del">
+                <img src="./assets/edit.svg" class="edit" data-id="1" handleToggle="true">
+                <img src="./assets/close.svg" class="del" data-id="1">
+                <form class="hideEdit">
+                    <input type="text">
+                    <select name="" id="">
+                        <option value="">
+                            option 1
+                        </option>
+                        <option value="">
+                            option 2
+                        </option>
+                        <option value="">
+                            option 3
+                        </option>
+                        <input type="date" name="" id="">
+                    </select>
+                </form>
             </div>
         </div>
     </div>
