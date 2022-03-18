@@ -1,5 +1,4 @@
 import TodoItem from "./components/TodoItem";
-import TodoForm from "./components/TodoForm";
 
 // Close the Todo form
 export const CloseTodoForm = () => {
@@ -26,15 +25,16 @@ export const ViewTodoForm = () => {
 	});
 };
 
+Date.prototype.toDateInputValue = function () {
+	var local = new Date(this);
+	local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+	return local.toJSON().slice(0, 10);
+};
+
 // Add Todo item
 export const AddTodo = () => {
 	const Task = document.getElementById("task");
 	let DateF = document.getElementById("date");
-	Date.prototype.toDateInputValue = function () {
-		var local = new Date(this);
-		local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
-		return local.toJSON().slice(0, 10);
-	};
 
 	document.getElementById("add").addEventListener("click", (e) => {
 		e.preventDefault();
@@ -84,7 +84,6 @@ export const DeleteTodo = () => {
 			target.getAttribute("data-id") ===
 				target.parentElement.getAttribute("data-id")
 		) {
-			console.log("delete");
 			target.parentElement.style.animation = "scaleDownEffect 400ms";
 			setTimeout(() => {
 				target.parentElement.remove();
@@ -111,7 +110,6 @@ export const EditTodo = () => {
 
 	container.addEventListener("click", (e) => {
 		const target = e.target;
-		// let toggle = target.getAttribute("handleToggle");
 		if (
 			target.matches(".edit") &&
 			target.getAttribute("data-id") ===
@@ -122,9 +120,28 @@ export const EditTodo = () => {
 			if (!form.classList.contains("hideEdit")) {
 				form.classList.add("hideEdit");
 				target.parentElement.style.marginBottom = "";
+				// continue from here
+
+				target.parentElement.children[1].textContent = form.children[0].value;
+
+				target.parentElement.children[2].innerText = form.children[1].value;
+				if (target.parentElement.children[2].innerText === "Low") {
+					target.parentElement.children[2].style.color = "green";
+				} else if (target.parentElement.children[2].innerText === "Medium") {
+					target.parentElement.children[2].style.color = "orange";
+				} else if (target.parentElement.children[2].innerText === "High") {
+					target.parentElement.children[2].style.color = "red";
+				}
+
+				target.parentElement.children[3].textContent = form.children[2].value
+					.split("-")
+					.reverse()
+					.join("/");
+
+				//
 			} else if (form.classList.contains("hideEdit")) {
 				form.classList.remove("hideEdit");
-				target.parentElement.style.marginBottom = "2.5rem";
+				target.parentElement.style.marginBottom = "3rem";
 			}
 		}
 	});

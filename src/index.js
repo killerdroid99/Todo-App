@@ -17,6 +17,16 @@ import {
 
 document.querySelector("body").appendChild(TodoForm());
 
+window.addEventListener("keydown", (e) => {
+	if (e.key === "Enter") {
+		e.preventDefault();
+	}
+});
+
+// window.addEventListener("keydown", (e) => {
+// 	console.log(e.key);
+// });
+
 CloseTodoForm();
 ViewTodoForm(".item-placeholder");
 AddTodo();

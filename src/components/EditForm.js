@@ -10,6 +10,9 @@ const EditForm = (inputVal, dataId) => {
 	form.setAttribute("data-id", dataId);
 	form.classList.add("hideEdit");
 	input.value = inputVal;
+
+	input.onchange = console.log(input.innerText);
+
 	low.innerText = "Low";
 	low.value = "Low";
 	medium.innerText = "Medium";
@@ -17,8 +20,7 @@ const EditForm = (inputVal, dataId) => {
 	high.innerText = "High";
 	high.value = "High";
 	date.type = "date";
-
-	// form.onsubmit();
+	date.value = new Date().toDateInputValue();
 
 	select.append(low, medium, high);
 	form.append(input, select, date);

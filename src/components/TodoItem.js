@@ -16,11 +16,11 @@ const TodoItem = (done, text, priority, date) => {
 	task.innerText = text;
 	task.className = "todo-task";
 	selectPriority.innerText = priority;
-	if (priority === "Low") {
+	if (selectPriority.innerText === "Low") {
 		selectPriority.style.color = "green";
-	} else if (priority === "Medium") {
+	} else if (selectPriority.innerText === "Medium") {
 		selectPriority.style.color = "orange";
-	} else if (priority === "High") {
+	} else if (selectPriority.innerText === "High") {
 		selectPriority.style.color = "red";
 	}
 	cal.innerText = date;
@@ -37,13 +37,15 @@ const TodoItem = (done, text, priority, date) => {
 	edit.setAttribute("handleToggle", true);
 	task.setAttribute("data-id", `${uuid}`);
 
-	item.append(checkBox);
-	item.appendChild(task);
-	item.appendChild(selectPriority);
-	item.appendChild(cal);
-	item.appendChild(edit);
-	item.appendChild(del);
-	item.appendChild(EditForm(task.innerText, `${uuid}`));
+	item.append(
+		checkBox,
+		task,
+		selectPriority,
+		cal,
+		edit,
+		del,
+		EditForm(task.innerText, `${uuid}`)
+	);
 
 	return item;
 };

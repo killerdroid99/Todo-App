@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Smooch+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Smooch+Sans:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
 
 $primary-color-one: #22577a;
 $primary-color-two: #38a3a5;
@@ -29,10 +30,12 @@ nav {
 	font-size: 1.3rem;
 	gap: 3em;
 	padding-block: 1em;
-	box-shadow: 3px 0px 10px $secondary-color-three;
 	h1 {
 		margin-inline: auto;
-		font-weight: 800;
+		font-weight: 500;
+		color: $secondary-color-three;
+		text-shadow: 0px 7px 3px $primary-color-one;
+		font-family: "Monoton", cursive;
 	}
 	ul {
 		list-style: none;
@@ -52,6 +55,13 @@ nav {
 	display: flex;
 	flex-direction: column;
 	gap: 1em;
+	h1 {
+		font-weight: 500;
+		color: $secondary-color-two;
+		text-shadow: 0px 5px 3px $primary-color-two;
+		font-size: 3.5rem;
+		font-family: "Smooch sans", cursive;
+	}
 }
 
 .project-container {
@@ -179,6 +189,28 @@ nav {
 	transition: 0.5s;
 	filter: drop-shadow(5px 5px 3px $secondary-color-one);
 
+	input[type="checkbox"] {
+		width: 25px;
+		height: 25px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		accent-color: $primary-color-one;
+		border: 3px solid$primary-color-one;
+		cursor: pointer;
+		appearance: none;
+		border-radius: 5px;
+		&:hover {
+			box-shadow: 0 0 5px $primary-color-two;
+		}
+		&:checked::after {
+			content: "✔";
+			font-size: 2rem;
+			margin-bottom: 0.25em;
+			color: $primary-color-one;
+		}
+	}
+
 	h3 {
 		width: 25ch;
 		cursor: pointer;
@@ -189,22 +221,6 @@ nav {
 
 	h4 {
 		width: 10ch;
-	}
-
-	input[type="checkbox"] {
-		width: 25px;
-		height: 25px;
-		accent-color: $primary-color-one;
-		border: 3px solid$primary-color-one;
-		cursor: pointer;
-		appearance: none;
-		border-radius: 5px;
-		&:hover {
-			box-shadow: 0 0 5px $primary-color-two;
-		}
-		&:checked {
-			appearance: revert;
-		}
 	}
 
 	img {
@@ -223,19 +239,22 @@ nav {
 	form {
 		position: fixed;
 		background-color: inherit;
-		opacity: 0.7;
-		bottom: -3em;
+		opacity: 0.9;
+		bottom: -4em;
 		padding: 0.5em;
-		border-radius: 0.5em;
+		padding-block: 1em;
+		border-radius: 0.4em;
 		display: flex;
 		align-items: center;
 		gap: 1em;
-		// transform: scale(0%);
 		z-index: 10;
 		input,
 		select {
 			background-color: inherit;
 			border: 2px solid $primary-color-one;
+			border-radius: 2px;
+			height: 1.5em;
+			padding-inline: 2px;
 		}
 	}
 }
@@ -250,6 +269,8 @@ nav {
 	justify-content: center;
 	font-weight: 900;
 	font-size: 1.5rem;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
 	color: $secondary-color-three;
 	padding-inline: 0.5em;
 	cursor: pointer;

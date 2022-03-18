@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Smooch+Sans:wght@700&display=swap");
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Smooch+Sans:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -26,13 +28,14 @@ nav {
   font-size: 1.3rem;
   gap: 3em;
   padding-block: 1em;
-  -webkit-box-shadow: 3px 0px 10px #c7f9cc;
-          box-shadow: 3px 0px 10px #c7f9cc;
 }
 
 nav h1 {
   margin-inline: auto;
-  font-weight: 800;
+  font-weight: 500;
+  color: #c7f9cc;
+  text-shadow: 0px 7px 3px #22577a;
+  font-family: "Monoton", cursive;
 }
 
 nav ul {
@@ -63,6 +66,14 @@ nav ul li {
       -ms-flex-direction: column;
           flex-direction: column;
   gap: 1em;
+}
+
+.projects h1 {
+  font-weight: 500;
+  color: #80ed99;
+  text-shadow: 0px 5px 3px #38a3a5;
+  font-size: 3.5rem;
+  font-family: "Smooch sans", cursive;
 }
 
 .project-container {
@@ -230,25 +241,18 @@ nav ul li {
           filter: drop-shadow(5px 5px 3px #57cc99);
 }
 
-.item h3 {
-  width: 25ch;
-  cursor: pointer;
+.item input[type="checkbox"] {
+  width: 25px;
+  height: 25px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: inherit;
-}
-
-.item h4 {
-  width: 10ch;
-}
-
-.item input[type="checkbox"] {
-  width: 25px;
-  height: 25px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   accent-color: #22577a;
   border: 3px solid #22577a;
   cursor: pointer;
@@ -263,10 +267,27 @@ nav ul li {
           box-shadow: 0 0 5px #38a3a5;
 }
 
-.item input[type="checkbox"]:checked {
-  -webkit-appearance: revert;
-     -moz-appearance: revert;
-          appearance: revert;
+.item input[type="checkbox"]:checked::after {
+  content: "✔";
+  font-size: 2rem;
+  margin-bottom: 0.25em;
+  color: #22577a;
+}
+
+.item h3 {
+  width: 25ch;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: inherit;
+}
+
+.item h4 {
+  width: 10ch;
 }
 
 .item img {
@@ -290,10 +311,11 @@ nav ul li {
 .item form {
   position: fixed;
   background-color: inherit;
-  opacity: 0.7;
-  bottom: -3em;
+  opacity: 0.9;
+  bottom: -4em;
   padding: 0.5em;
-  border-radius: 0.5em;
+  padding-block: 1em;
+  border-radius: 0.4em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -308,6 +330,9 @@ nav ul li {
 .item form select {
   background-color: inherit;
   border: 2px solid #22577a;
+  border-radius: 2px;
+  height: 1.5em;
+  padding-inline: 2px;
 }
 
 .item-placeholder {
@@ -326,6 +351,7 @@ nav ul li {
           justify-content: center;
   font-weight: 900;
   font-size: 1.5rem;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
   color: #c7f9cc;
   padding-inline: 0.5em;
   cursor: pointer;
