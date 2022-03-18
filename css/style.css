@@ -237,6 +237,8 @@ nav ul li {
       justify-content: space-around;
   -webkit-transition: 0.5s;
   transition: 0.5s;
+  -webkit-box-shadow: 3px 3px 0px #22577a;
+          box-shadow: 3px 3px 0px #22577a;
   -webkit-filter: drop-shadow(5px 5px 3px #57cc99);
           filter: drop-shadow(5px 5px 3px #57cc99);
 }
@@ -337,7 +339,7 @@ nav ul li {
 
 .item-placeholder {
   height: 90px;
-  width: 70vw;
+  min-width: 70vw;
   border: 5px dashed #c7f9cc;
   border-radius: 1rem;
   display: -webkit-box;
@@ -358,8 +360,9 @@ nav ul li {
   margin-inline: 0.7em;
 }
 
-.item-placeholder:active {
-  font-size: 1.4rem;
+.item-placeholder:active > div {
+  -webkit-transform: translateX(15px);
+          transform: translateX(15px);
 }
 
 .overlay {
@@ -540,6 +543,10 @@ nav ul li {
 .completed h3 {
   -webkit-text-decoration: line-through 3px;
           text-decoration: line-through 3px;
+}
+
+.completed h4 {
+  color: #22577a;
 }
 
 .hideEdit {
