@@ -1,7 +1,7 @@
-import { v4 } from "uuid";
+// import { v4 } from "uuid";
 import EditForm from "./EditForm";
 
-const TodoItem = (done, text, priority, date) => {
+const TodoItem = (uuid, done, text, priority, date) => {
 	const item = document.createElement("div");
 	const checkBox = document.createElement("input");
 	const task = document.createElement("h3");
@@ -30,7 +30,7 @@ const TodoItem = (done, text, priority, date) => {
 	edit.src = "../assets/edit.svg";
 	edit.className = "edit";
 
-	const uuid = v4();
+	// const uuid = v4();
 	item.setAttribute("data-id", `${uuid}`);
 	del.setAttribute("data-id", `${uuid}`);
 	edit.setAttribute("data-id", `${uuid}`);

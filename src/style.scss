@@ -187,6 +187,7 @@ nav {
 	user-select: none;
 	justify-content: space-around;
 	transition: 0.5s;
+	box-shadow: 3px 3px 0px $primary-color-one;
 	filter: drop-shadow(5px 5px 3px $secondary-color-one);
 
 	input[type="checkbox"] {
@@ -261,7 +262,7 @@ nav {
 
 .item-placeholder {
 	height: 90px;
-	width: 70vw;
+	min-width: 70vw;
 	border: 5px dashed $secondary-color-three;
 	border-radius: 1rem;
 	display: flex;
@@ -276,8 +277,8 @@ nav {
 	cursor: pointer;
 	margin-inline: 0.7em;
 
-	&:active {
-		font-size: 1.4rem;
+	&:active > div {
+		transform: translateX(15px);
 	}
 }
 
@@ -394,6 +395,9 @@ nav {
 	filter: grayscale(100%) drop-shadow(5px 5px 3px #696969);
 	h3 {
 		text-decoration: line-through 3px;
+	}
+	h4 {
+		color: $primary-color-one;
 	}
 }
 

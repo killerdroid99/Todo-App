@@ -1,5 +1,28 @@
 import TodoItem from "./components/TodoItem";
+import { v4 } from "uuid";
 
+const TodoItemObject = (uuid, completedStatus, task, priority, date) => {
+	return { uuid, completedStatus, task, priority, date };
+};
+
+let TodoObjectArray = [];
+if (localStorage.length) {
+	TodoObjectArray = JSON.parse(localStorage.getItem("todoList"));
+	TodoObjectArray.forEach((todoObject) => {
+		document
+			.querySelector(".todo-container")
+			.appendChild(
+				TodoItem(
+					todoObject.uuid,
+					todoObject.completedStatus,
+					todoObject.task,
+					todoObject.priority,
+					todoObject.date
+				)
+			);
+	});
+}
+// localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
 // Close the Todo form
 export const CloseTodoForm = () => {
 	const exitBtn = document.getElementById("exit");
@@ -53,15 +76,32 @@ export const AddTodo = () => {
 				DateF.value = new Date().toDateInputValue();
 			}
 
+			const uuid = v4();
+
+			TodoObjectArray.unshift(
+				TodoItemObject(
+					uuid,
+					false,
+					Task.value,
+					Priority,
+					DateF.value.split("-").reverse().join("/")
+				)
+			);
+			localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
+
+			// console.log(TodoObjectArray);
+
 			document.querySelector(".overlay").style.animation =
 				"scaleDownEffect 500ms";
 			setTimeout(() => {
 				const Todo = TodoItem(
+					uuid,
 					false,
 					Task.value,
 					Priority,
 					DateF.value.split("-").reverse().join("/")
 				);
+				// console.log(Todo);
 				Todo.style.animation = "scaleUpEffect 400ms";
 				document
 					.querySelector(".todo-container")
@@ -85,6 +125,14 @@ export const DeleteTodo = () => {
 				target.parentElement.getAttribute("data-id")
 		) {
 			target.parentElement.style.animation = "scaleDownEffect 400ms";
+
+			const afterDelete = TodoObjectArray.filter(
+				(todoObject) => todoObject.uuid !== target.getAttribute("data-id")
+			);
+
+			TodoObjectArray = [...afterDelete];
+			console.log(TodoObjectArray);
+
 			setTimeout(() => {
 				target.parentElement.remove();
 			}, 300);
@@ -98,9 +146,20 @@ export const MarkAsCompleted = () => {
 
 	container.addEventListener("click", (e) => {
 		const target = e.target;
+
 		if (target.matches("input[type='checkbox']")) {
 			target.parentElement.classList.toggle("completed");
 		}
+		TodoObjectArray.map((todoObject) => {
+			if (todoObject.uuid === target.parentElement.getAttribute("data-id")) {
+				target.checked
+					? (todoObject.completedStatus = true)
+					: (todoObject.completedStatus = false);
+			}
+		});
+		localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
+		console.log(target.checked);
+		console.log(TodoObjectArray);
 	});
 };
 
@@ -120,7 +179,6 @@ export const EditTodo = () => {
 			if (!form.classList.contains("hideEdit")) {
 				form.classList.add("hideEdit");
 				target.parentElement.style.marginBottom = "";
-				// continue from here
 
 				target.parentElement.children[1].textContent = form.children[0].value;
 
@@ -138,7 +196,21 @@ export const EditTodo = () => {
 					.reverse()
 					.join("/");
 
-				//
+				TodoObjectArray.forEach((todoObject) => {
+					if (
+						todoObject.uuid === target.parentElement.getAttribute("data-id")
+					) {
+						todoObject.task = form.children[0].value;
+						todoObject.priority = form.children[1].value;
+						todoObject.date = form.children[2].value
+							.split("-")
+							.reverse()
+							.join("/");
+					}
+				});
+				localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
+
+				// console.table(TodoObjectArray);
 			} else if (form.classList.contains("hideEdit")) {
 				form.classList.remove("hideEdit");
 				target.parentElement.style.marginBottom = "3rem";

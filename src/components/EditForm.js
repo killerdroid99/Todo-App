@@ -11,7 +11,11 @@ const EditForm = (inputVal, dataId) => {
 	form.classList.add("hideEdit");
 	input.value = inputVal;
 
-	input.onchange = console.log(input.innerText);
+	Date.prototype.toDateInputValue = function () {
+		var local = new Date(this);
+		local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+		return local.toJSON().slice(0, 10);
+	};
 
 	low.innerText = "Low";
 	low.value = "Low";

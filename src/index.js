@@ -6,6 +6,7 @@ import {
 	DeleteTodo,
 	MarkAsCompleted,
 	EditTodo,
+	TodoObjectArray,
 } from "./DomActions";
 
 // document
@@ -23,9 +24,9 @@ window.addEventListener("keydown", (e) => {
 	}
 });
 
-// window.addEventListener("keydown", (e) => {
-// 	console.log(e.key);
-// });
+// if (location.reload()) {
+// 	localStorage.setItem("todoList", TodoObjectArray);
+// }
 
 CloseTodoForm();
 ViewTodoForm(".item-placeholder");
