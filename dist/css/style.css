@@ -285,7 +285,6 @@ nav ul li {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: inherit;
 }
 
 .item h4 {
@@ -293,7 +292,8 @@ nav ul li {
 }
 
 .item img {
-  width: 30px;
+  width: 35px;
+  height: 35px;
   cursor: pointer;
   position: end;
   -webkit-transition: 0.3s;
@@ -406,8 +406,8 @@ nav ul li {
 }
 
 .overlay form img {
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   position: absolute;
   top: 0.5em;
   right: 0.5em;

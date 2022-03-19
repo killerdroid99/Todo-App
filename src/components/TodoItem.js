@@ -13,6 +13,11 @@ const TodoItem = (uuid, done, text, priority, date) => {
 	item.classList.add("item");
 	checkBox.type = "checkbox";
 	checkBox.checked = done;
+	if (checkBox.checked) {
+		item.classList.add("completed");
+	} else {
+		item.classList.remove("completed");
+	}
 	task.innerText = text;
 	task.className = "todo-task";
 	selectPriority.innerText = priority;
@@ -30,7 +35,6 @@ const TodoItem = (uuid, done, text, priority, date) => {
 	edit.src = "../assets/edit.svg";
 	edit.className = "edit";
 
-	// const uuid = v4();
 	item.setAttribute("data-id", `${uuid}`);
 	del.setAttribute("data-id", `${uuid}`);
 	edit.setAttribute("data-id", `${uuid}`);

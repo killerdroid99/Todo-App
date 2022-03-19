@@ -20,6 +20,11 @@ if (localStorage.length) {
 					todoObject.date
 				)
 			);
+		if (todoObject.completedStatus) {
+			TodoItem().classList.add("completed");
+		} else {
+			TodoItem().classList.remove("completed");
+		}
 	});
 }
 // localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
@@ -147,16 +152,27 @@ export const MarkAsCompleted = () => {
 	container.addEventListener("click", (e) => {
 		const target = e.target;
 
-		if (target.matches("input[type='checkbox']")) {
-			target.parentElement.classList.toggle("completed");
-		}
-		TodoObjectArray.map((todoObject) => {
+		TodoObjectArray.forEach((todoObject) => {
 			if (todoObject.uuid === target.parentElement.getAttribute("data-id")) {
-				target.checked
-					? (todoObject.completedStatus = true)
-					: (todoObject.completedStatus = false);
+				if (target.matches("input[type='checkbox']")) {
+					if (target.checked) {
+						todoObject.completedStatus = true;
+						target.parentElement.classList.add("completed");
+					} else {
+						todoObject.completedStatus = false;
+						target.parentElement.classList.remove("completed");
+					}
+				}
+				// target.checked
+				// 	? (todoObject.completedStatus = true)(
+				// 			target.parentElement.classList.add("completed")
+				// 	  )
+				// 	: (todoObject.completedStatus = false)(
+				// 			target.parentElement.classList.remove("completed")
+				// 	  );
 			}
 		});
+
 		localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
 		console.log(target.checked);
 		console.log(TodoObjectArray);
