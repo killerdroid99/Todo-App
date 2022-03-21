@@ -10,6 +10,7 @@ $secondary-color-three: #c7f9cc;
 * {
 	margin: 0;
 	padding: 0;
+	user-select: none;
 }
 
 body {
@@ -20,23 +21,41 @@ body {
 		$primary-color-two
 	);
 	display: flex;
+	height: 100vh;
 }
 
 nav {
 	display: flex;
 	flex-direction: column;
+	height: 100vh;
 	background-color: $primary-color-two;
 	width: clamp(100px, 20vw, 250px);
 	font-size: 1.3rem;
 	gap: 3em;
 	padding-block: 1em;
-	h1 {
+
+	div {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
 		margin-inline: auto;
-		font-weight: 500;
-		color: $secondary-color-three;
-		text-shadow: 0px 7px 3px $primary-color-one;
-		font-family: "Monoton", cursive;
+
+		img {
+			margin-inline: auto;
+			height: 50px;
+			width: 50px;
+		}
+
+		h1 {
+			font-weight: 500;
+			color: $secondary-color-three;
+			text-shadow: 0px 7px 3px $primary-color-one;
+			font-family: "Monoton", cursive;
+			align-items: center;
+			font-size: clamp(1.5rem, 2.75vh, 3rem);
+		}
 	}
+
 	ul {
 		list-style: none;
 		display: flex;
@@ -67,8 +86,11 @@ nav {
 .project-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, 300px);
-	gap: 4em;
+	gap: 3em;
+	margin-inline: auto;
+	row-gap: 2.5em;
 	padding-block: 2em;
+	padding-inline: 1em;
 	max-width: 75vw;
 	max-height: 85vh;
 	overflow: auto;
@@ -86,27 +108,48 @@ nav {
 
 // Project card styles
 .card {
-	height: 350px;
+	min-height: 350px;
 	background-color: $secondary-color-three;
 	border-radius: 1em;
-	padding: 0.5em;
+	padding: 1em;
 	position: relative;
 	box-shadow: inset 0 -1em 0 $secondary-color-two;
 	user-select: none;
 	transition: 0.5s;
+	display: flex;
+	flex-direction: column;
+	transition: 1.5s;
 	filter: drop-shadow(5px 5px 3px $secondary-color-one);
 
 	&:hover > svg {
 		transform: translateY(-10px);
 	}
-	h2 {
-		margin-inline: 3em;
-		border-bottom: 5px solid $primary-color-two;
+
+	input {
+		margin-inline: auto;
+		width: 8em;
+		font-size: 2rem;
+		text-align: center;
+		background-color: inherit;
+		color: $primary-color-one;
+		font-weight: bold;
+		border: 2px solid transparent;
+		caret-color: $primary-color-one;
+		border: 2px solid $primary-color-two;
+		border-radius: 5px;
+		transition: 0.4s;
+		&:focus {
+			outline: none;
+			// border: 2px solid $primary-color-two;
+			border-radius: 15px;
+			box-shadow: 0px 5px 2px $primary-color-two;
+		}
 	}
 
 	ul {
 		margin: 2.5em;
-		font-size: 1.1rem;
+		font-size: 1rem;
+		line-height: 2em;
 
 		li {
 			&::marker {
@@ -118,7 +161,7 @@ nav {
 		}
 	}
 
-	svg {
+	.btn {
 		width: 50px;
 		height: 50px;
 		margin-inline: 40%;
@@ -129,11 +172,25 @@ nav {
 		cursor: pointer;
 		&:hover {
 			filter: drop-shadow(5px 5px 0px $primary-color-two);
-			transform: scale(1.02) translateY(-10px);
+			transform: scale(1.02) translateY(-5px);
 		}
 		&:active {
 			filter: none;
-			transform: translateY(-10px);
+			transform: translateY(-5px);
+		}
+	}
+
+	.delImg {
+		width: 50px;
+		height: 50px;
+		position: absolute;
+		right: 1em;
+		bottom: 1em;
+		cursor: pointer;
+		border-radius: 50%;
+		&:active {
+			transform: scale(90%);
+			filter: grayscale(60%);
 		}
 	}
 }
@@ -151,6 +208,9 @@ nav {
 	color: $secondary-color-three;
 	padding-inline: 0.5em;
 	cursor: pointer;
+	&:active > span {
+		animation: scaleDownEffect 700ms;
+	}
 }
 
 .todo-container {

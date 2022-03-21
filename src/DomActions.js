@@ -1,11 +1,18 @@
 import TodoItem from "./components/TodoItem";
+import ProjectCard from "./components/ProjectCard";
 import { v4 } from "uuid";
 
 const TodoItemObject = (uuid, completedStatus, task, priority, date) => {
 	return { uuid, completedStatus, task, priority, date };
 };
 
+let ProjectObject = (pid, title, linkedTodoList, complete, high, med, low) => {
+	return { pid, title, linkedTodoList, total, complete, high, med, low };
+};
+
+let ProjectObjectArray = [];
 let TodoObjectArray = [];
+
 if (localStorage.length) {
 	TodoObjectArray = JSON.parse(localStorage.getItem("todoList"));
 	TodoObjectArray.forEach((todoObject) => {
@@ -27,7 +34,6 @@ if (localStorage.length) {
 		}
 	});
 }
-// localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
 // Close the Todo form
 export const CloseTodoForm = () => {
 	const exitBtn = document.getElementById("exit");
@@ -234,3 +240,49 @@ export const EditTodo = () => {
 		}
 	});
 };
+
+// Editing title of project on created project card
+export const EditTitle = () => {
+	const container = document.querySelector(".project-container");
+
+	container.addEventListener("click", (e) => {
+		const target = e.target;
+
+		if (target.matches("span")) {
+			const newProject = ProjectCard(v4(), "Title");
+
+			newProject.style.animation = "scaleUpEffect 300ms";
+			target.parentElement.parentElement.insertAdjacentElement(
+				"beforeend",
+				newProject
+			);
+		} else if (target.className === "card-placeholder") {
+			const newProject = ProjectCard(v4(), "Title");
+
+			newProject.style.animation = "scaleUpEffect 300ms";
+			target.parentElement.insertAdjacentElement("beforeend", newProject);
+		}
+	});
+};
+
+// Deleting a particular project
+export const DeleteProject = () => {
+	const container = document.querySelector(".project-container");
+
+	container.addEventListener("click", (e) => {
+		const target = e.target;
+
+		if (
+			target.getAttribute("class") === "delImg" &&
+			target.getAttribute("PID") === target.parentElement.getAttribute("PID")
+		) {
+			target.parentElement.style.animation = "scaleDownEffect 300ms";
+			setTimeout(() => {
+				target.parentElement.remove();
+			}, 250);
+		}
+	});
+};
+
+// Redirect to todo list
+export const Redirect = () => {};

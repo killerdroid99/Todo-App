@@ -1,12 +1,16 @@
 import TodoForm from "./components/TodoForm";
+// import ProjectCard from "./components/ProjectCard";
+
 import {
-	CloseTodoForm,
-	ViewTodoForm,
-	AddTodo,
-	DeleteTodo,
-	MarkAsCompleted,
-	EditTodo,
-	TodoObjectArray,
+	// CloseTodoForm,
+	// ViewTodoForm,
+	// AddTodo,
+	// DeleteTodo,
+	// MarkAsCompleted,
+	// EditTodo,
+	// TodoObjectArray,
+	EditTitle,
+	DeleteProject,
 } from "./DomActions";
 
 // document
@@ -24,13 +28,20 @@ window.addEventListener("keydown", (e) => {
 	}
 });
 
+// document
+// 	.querySelector(".project-container")
+// 	.insertAdjacentElement("beforeend", ProjectCard("title"));
+
 // if (location.reload()) {
 // 	localStorage.setItem("todoList", TodoObjectArray);
 // }
 
-CloseTodoForm();
-ViewTodoForm(".item-placeholder");
-AddTodo();
-DeleteTodo();
-MarkAsCompleted();
-EditTodo();
+EditTitle();
+DeleteProject();
+
+// CloseTodoForm();
+// ViewTodoForm(".item-placeholder");
+// AddTodo();
+// DeleteTodo();
+// MarkAsCompleted();
+// EditTodo();
