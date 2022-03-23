@@ -12,7 +12,6 @@ const ProjectCard = (
 	const input = document.createElement("input");
 	input.setAttribute("PID", PID);
 	input.className = "titleInput";
-	input.onchange = () => console.log(input.value);
 	const ul = document.createElement("ul");
 	const total = document.createElement("li");
 	const tStrong = document.createElement("strong");
@@ -25,6 +24,7 @@ const ProjectCard = (
 	const low = document.createElement("li");
 	const lStrong = document.createElement("strong");
 	const img = document.createElement("img");
+	img.setAttribute("PID", PID);
 	const delImg = document.createElement("img");
 	delImg.setAttribute("PID", PID);
 

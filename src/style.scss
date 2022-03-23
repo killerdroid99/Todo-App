@@ -27,12 +27,13 @@ body {
 nav {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: auto;
 	background-color: $primary-color-two;
 	width: clamp(100px, 20vw, 250px);
 	font-size: 1.3rem;
 	gap: 3em;
 	padding-block: 1em;
+	position: static;
 
 	div {
 		display: flex;
@@ -72,7 +73,11 @@ nav {
 .projects {
 	padding: 2em;
 	display: flex;
+	width: 100%;
+	position: relative;
+	align-items: center;
 	flex-direction: column;
+	height: auto;
 	gap: 1em;
 	h1 {
 		font-weight: 500;
@@ -85,6 +90,8 @@ nav {
 
 .project-container {
 	display: grid;
+	max-width: auto;
+	height: auto;
 	grid-template-columns: repeat(auto-fit, 300px);
 	gap: 3em;
 	margin-inline: auto;
@@ -92,8 +99,9 @@ nav {
 	padding-block: 2em;
 	padding-inline: 1em;
 	max-width: 75vw;
-	max-height: 85vh;
+	height: auto;
 	overflow: auto;
+	overflow-x: hidden;
 	&::-webkit-scrollbar {
 		background-color: $secondary-color-three;
 		border-radius: 10px;
@@ -216,8 +224,8 @@ nav {
 .todo-container {
 	display: flex;
 	padding-inline: 1em;
-	max-width: 85vw;
-	height: 85vh;
+	max-width: auto;
+	height: auto;
 
 	overflow: auto;
 	flex-direction: column;
@@ -321,8 +329,9 @@ nav {
 }
 
 .item-placeholder {
-	height: 90px;
-	min-width: 70vw;
+	min-height: 90px;
+	width: 70vw;
+	display: block;
 	border: 5px dashed $secondary-color-three;
 	border-radius: 1rem;
 	display: flex;
@@ -463,4 +472,25 @@ nav {
 
 .hideEdit {
 	transform: scale(0%);
+}
+
+.backBtn {
+	display: block;
+	position: absolute;
+	height: 50px;
+	width: 50px;
+	background-color: $primary-color-one;
+	border-radius: 50%;
+	transform: rotate(180deg);
+	left: 1em;
+	top: 1em;
+	cursor: pointer;
+	&:hover {
+		filter: drop-shadow(-5px -5px 0px $primary-color-two);
+		transform: scale(1.02) translateY(-5px) rotate(180deg);
+	}
+	&:active {
+		filter: none;
+		transform: translateY(-5px) rotate(180deg);
+	}
 }

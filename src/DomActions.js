@@ -6,32 +6,41 @@ const TodoItemObject = (uuid, completedStatus, task, priority, date) => {
 	return { uuid, completedStatus, task, priority, date };
 };
 
-let ProjectObject = (pid, title, linkedTodoList, complete, high, med, low) => {
+const ProjectObject = (
+	pid,
+	title,
+	linkedTodoList = [],
+	total = linkedTodoList.length,
+	complete = 0,
+	high = 0,
+	med = 0,
+	low = 0
+) => {
 	return { pid, title, linkedTodoList, total, complete, high, med, low };
 };
 
+// ProjectObject = JSON.parse(localStorage.getItem("TodoProject"));
+
 let ProjectObjectArray = [];
-let TodoObjectArray = [];
 
 if (localStorage.length) {
-	TodoObjectArray = JSON.parse(localStorage.getItem("todoList"));
-	TodoObjectArray.forEach((todoObject) => {
+	ProjectObjectArray = JSON.parse(localStorage.getItem("TodoProject"));
+	// console.table(ProjectObjectArray);
+
+	ProjectObjectArray.forEach((projectObject) => {
+		// console.log(projectObject);
 		document
-			.querySelector(".todo-container")
+			.querySelector(".project-container")
 			.appendChild(
-				TodoItem(
-					todoObject.uuid,
-					todoObject.completedStatus,
-					todoObject.task,
-					todoObject.priority,
-					todoObject.date
+				ProjectCard(
+					projectObject.pid,
+					projectObject.title,
+					projectObject.total,
+					projectObject.high,
+					projectObject.med,
+					projectObject.low
 				)
 			);
-		if (todoObject.completedStatus) {
-			TodoItem().classList.add("completed");
-		} else {
-			TodoItem().classList.remove("completed");
-		}
 	});
 }
 // Close the Todo form
@@ -66,7 +75,7 @@ Date.prototype.toDateInputValue = function () {
 };
 
 // Add Todo item
-export const AddTodo = () => {
+export const AddTodo = (targetProject) => {
 	const Task = document.getElementById("task");
 	let DateF = document.getElementById("date");
 
@@ -89,7 +98,7 @@ export const AddTodo = () => {
 
 			const uuid = v4();
 
-			TodoObjectArray.unshift(
+			targetProject.linkedTodoList.unshift(
 				TodoItemObject(
 					uuid,
 					false,
@@ -98,7 +107,7 @@ export const AddTodo = () => {
 					DateF.value.split("-").reverse().join("/")
 				)
 			);
-			localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
+			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 
 			// console.log(TodoObjectArray);
 
@@ -125,7 +134,7 @@ export const AddTodo = () => {
 };
 
 // Delete any Todo item
-export const DeleteTodo = () => {
+export const DeleteTodo = (targetProject) => {
 	const container = document.querySelector(".todo-container");
 
 	container.addEventListener("click", (e) => {
@@ -137,12 +146,13 @@ export const DeleteTodo = () => {
 		) {
 			target.parentElement.style.animation = "scaleDownEffect 400ms";
 
-			const afterDelete = TodoObjectArray.filter(
+			const afterDelete = targetProject.linkedTodoList.filter(
 				(todoObject) => todoObject.uuid !== target.getAttribute("data-id")
 			);
 
-			TodoObjectArray = [...afterDelete];
-			console.log(TodoObjectArray);
+			targetProject.linkedTodoList = [...afterDelete];
+			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
+			// console.log(TodoObjectArray);
 
 			setTimeout(() => {
 				target.parentElement.remove();
@@ -152,13 +162,13 @@ export const DeleteTodo = () => {
 };
 
 // Mark as complete when user selects the checkbox
-export const MarkAsCompleted = () => {
+export const MarkAsCompleted = (targetProject) => {
 	const container = document.querySelector(".todo-container");
 
 	container.addEventListener("click", (e) => {
 		const target = e.target;
 
-		TodoObjectArray.forEach((todoObject) => {
+		targetProject.linkedTodoList.forEach((todoObject) => {
 			if (todoObject.uuid === target.parentElement.getAttribute("data-id")) {
 				if (target.matches("input[type='checkbox']")) {
 					if (target.checked) {
@@ -169,24 +179,17 @@ export const MarkAsCompleted = () => {
 						target.parentElement.classList.remove("completed");
 					}
 				}
-				// target.checked
-				// 	? (todoObject.completedStatus = true)(
-				// 			target.parentElement.classList.add("completed")
-				// 	  )
-				// 	: (todoObject.completedStatus = false)(
-				// 			target.parentElement.classList.remove("completed")
-				// 	  );
 			}
 		});
 
-		localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
-		console.log(target.checked);
-		console.log(TodoObjectArray);
+		localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
+		// console.log(target.checked);
+		// console.log(TodoObjectArray);
 	});
 };
 
 // Edit any created Todo item
-export const EditTodo = () => {
+export const EditTodo = (targetProject) => {
 	const container = document.querySelector(".todo-container");
 
 	container.addEventListener("click", (e) => {
@@ -218,7 +221,7 @@ export const EditTodo = () => {
 					.reverse()
 					.join("/");
 
-				TodoObjectArray.forEach((todoObject) => {
+				targetProject.linkedTodoList.forEach((todoObject) => {
 					if (
 						todoObject.uuid === target.parentElement.getAttribute("data-id")
 					) {
@@ -230,7 +233,7 @@ export const EditTodo = () => {
 							.join("/");
 					}
 				});
-				localStorage.setItem("todoList", JSON.stringify(TodoObjectArray));
+				localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 
 				// console.table(TodoObjectArray);
 			} else if (form.classList.contains("hideEdit")) {
@@ -241,8 +244,8 @@ export const EditTodo = () => {
 	});
 };
 
-// Editing title of project on created project card
-export const EditTitle = () => {
+// Adding project card
+export const AddProject = () => {
 	const container = document.querySelector(".project-container");
 
 	container.addEventListener("click", (e) => {
@@ -256,12 +259,27 @@ export const EditTitle = () => {
 				"beforeend",
 				newProject
 			);
+			ProjectObjectArray.push(
+				ProjectObject(
+					newProject.getAttribute("PID"),
+					newProject.firstElementChild.value
+				)
+			);
+			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 		} else if (target.className === "card-placeholder") {
 			const newProject = ProjectCard(v4(), "Title");
 
 			newProject.style.animation = "scaleUpEffect 300ms";
 			target.parentElement.insertAdjacentElement("beforeend", newProject);
+			ProjectObjectArray.push(
+				ProjectObject(
+					newProject.getAttribute("PID"),
+					newProject.firstElementChild.value
+				)
+			);
+			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 		}
+		// console.table(ProjectObjectArray);
 	});
 };
 
@@ -276,13 +294,119 @@ export const DeleteProject = () => {
 			target.getAttribute("class") === "delImg" &&
 			target.getAttribute("PID") === target.parentElement.getAttribute("PID")
 		) {
+			const afterDelete = [];
+			ProjectObjectArray.forEach((proj) => {
+				if (proj.pid !== target.getAttribute("PID")) {
+					afterDelete.push(proj);
+				}
+			});
+			ProjectObjectArray = afterDelete;
+			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 			target.parentElement.style.animation = "scaleDownEffect 300ms";
 			setTimeout(() => {
 				target.parentElement.remove();
 			}, 250);
 		}
+		// console.table(ProjectObjectArray);
+	});
+};
+
+// Edit the title
+export const EditTitle = () => {
+	const container = document.querySelector(".project-container");
+
+	container.addEventListener("keydown", (e) => {
+		const target = e.target;
+		if (
+			target.getAttribute("class") === "titleInput" &&
+			target.getAttribute("PID") === target.parentElement.getAttribute("PID") &&
+			e.code == "Enter"
+		) {
+			ProjectObjectArray.forEach((proj) => {
+				if (proj.pid === target.getAttribute("PID")) {
+					proj.title = target.value;
+					target.blur();
+				}
+			});
+		}
+		localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
+		// console.table(ProjectObjectArray);
 	});
 };
 
 // Redirect to todo list
-export const Redirect = () => {};
+export const Redirect = () => {
+	const main = document.querySelector(".projects");
+	const projectContainer = document.querySelector(".project-container");
+	const backButton = document.createElement("img");
+	backButton.className = "backBtn";
+	backButton.src = "./assets/btn.svg";
+	backButton.alt = "back";
+	const itemPlaceholder = document.createElement("div");
+	itemPlaceholder.className = "item-placeholder";
+	itemPlaceholder.innerText = "Add Todo	";
+	const rArrow = document.createElement("div");
+	rArrow.innerText = "➜";
+	itemPlaceholder.append(rArrow);
+	const todoContainer = document.createElement("div");
+	todoContainer.className = "todo-container";
+
+	projectContainer.addEventListener("click", (e) => {
+		const target = e.target;
+		let targetProject;
+		ProjectObjectArray.forEach((projectObject) => {
+			if (target.getAttribute("PID") === projectObject.pid) {
+				targetProject = projectObject;
+			}
+		});
+		if (
+			target.getAttribute("class") === "btn" &&
+			target.getAttribute("PID") === target.parentElement.getAttribute("PID")
+		) {
+			main.firstElementChild.innerText =
+				target.parentElement.firstElementChild.value;
+			projectContainer.style.display = "none";
+			main.append(backButton, itemPlaceholder, todoContainer);
+			ViewTodoForm();
+			CloseTodoForm();
+			AddTodo(targetProject);
+			DeleteTodo(targetProject);
+			MarkAsCompleted(targetProject);
+			EditTodo(targetProject);
+			if (targetProject.linkedTodoList.length) {
+				targetProject.linkedTodoList.map((todoObject) => {
+					document
+						.querySelector(".todo-container")
+						.appendChild(
+							TodoItem(
+								todoObject.uuid,
+								todoObject.completedStatus,
+								todoObject.task,
+								todoObject.priority,
+								todoObject.date
+							)
+						);
+
+					if (todoObject.completedStatus) {
+						TodoItem().classList.add("completed");
+						// console.log("yes");
+					} else {
+						TodoItem().classList.remove("completed");
+						// console.log("no");
+					}
+				});
+			}
+		}
+	});
+};
+
+export const BackToProjects = () => {
+	const main = document.querySelector(".projects");
+
+	main.addEventListener("click", (e) => {
+		const target = e.target;
+		if (target.matches("img") && target.getAttribute("class") === "backBtn") {
+			location.reload();
+		}
+	});
+};
