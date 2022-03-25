@@ -184,7 +184,6 @@ export const DeleteTodo = (targetProject) => {
 			targetProject.total--;
 			targetProject.complete = 0;
 			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
-			// console.log(TodoObjectArray);
 
 			setTimeout(() => {
 				target.parentElement.remove();
