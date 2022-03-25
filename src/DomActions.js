@@ -41,7 +41,9 @@ if (localStorage.length) {
 				)
 			);
 	});
-} else localStorage.setItem("TodoProject", "[]");
+} else {
+	localStorage.setItem("TodoProject", "[]");
+}
 // Close the Todo form
 export const CloseTodoForm = () => {
 	const exitBtn = document.getElementById("exit");
