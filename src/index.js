@@ -2,19 +2,11 @@ import TodoForm from "./components/TodoForm";
 // import ProjectCard from "./components/ProjectCard";
 
 import {
-	// CloseTodoForm,
-	// ViewTodoForm,
-	// AddTodo,
-	// DeleteTodo,
-	// MarkAsCompleted,
-	// EditTodo,
-	// TodoObjectArray,
 	AddProject,
 	DeleteProject,
 	EditTitle,
 	Redirect,
 	BackToProjects,
-	// ProjectObjectArray,
 } from "./DomActions";
 
 document.querySelector("body").appendChild(TodoForm());
