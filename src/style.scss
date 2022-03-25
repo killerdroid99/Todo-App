@@ -21,7 +21,6 @@ body {
 		$primary-color-two
 	);
 	display: flex;
-	// width: 100vw;
 	height: 100vh;
 	flex-direction: column;
 }
@@ -99,7 +98,6 @@ nav {
 	}
 }
 
-// Project card styles
 .card {
 	min-height: 350px;
 	background-color: $secondary-color-three;
