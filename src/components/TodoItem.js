@@ -30,9 +30,9 @@ const TodoItem = (uuid, done, text, priority, date) => {
 	}
 	cal.innerText = date;
 	cal.id = "todo-date";
-	del.src = "../assets/close.svg";
+	del.src = "./assets/close.svg";
 	del.className = "del";
-	edit.src = "../assets/edit.svg";
+	edit.src = "./assets/edit.svg";
 	edit.className = "edit";
 
 	item.setAttribute("data-id", `${uuid}`);
