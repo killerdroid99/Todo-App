@@ -1,6 +1,7 @@
 import TodoItem from "./components/TodoItem";
 import ProjectCard from "./components/ProjectCard";
 import { v4 } from "uuid";
+import "./style.scss";
 
 const TodoItemObject = (uuid, completedStatus, task, priority, date) => {
 	return { uuid, completedStatus, task, priority, date };
@@ -10,7 +11,7 @@ const ProjectObject = (
 	pid,
 	title,
 	linkedTodoList = [],
-	total = linkedTodoList.length,
+	total = 0,
 	complete = 0,
 	high = 0,
 	med = 0,
@@ -19,16 +20,13 @@ const ProjectObject = (
 	return { pid, title, linkedTodoList, total, complete, high, med, low };
 };
 
-// ProjectObject = JSON.parse(localStorage.getItem("TodoProject"));
-
 let ProjectObjectArray = [];
 
+// Checking local storage for JSON data
 if (localStorage.length) {
 	ProjectObjectArray = JSON.parse(localStorage.getItem("TodoProject"));
-	// console.table(ProjectObjectArray);
 
 	ProjectObjectArray.forEach((projectObject) => {
-		// console.log(projectObject);
 		document
 			.querySelector(".project-container")
 			.appendChild(
@@ -36,6 +34,7 @@ if (localStorage.length) {
 					projectObject.pid,
 					projectObject.title,
 					projectObject.total,
+					projectObject.complete,
 					projectObject.high,
 					projectObject.med,
 					projectObject.low
@@ -68,6 +67,7 @@ export const ViewTodoForm = () => {
 	});
 };
 
+// Adding a prototype method to Date object constructor
 Date.prototype.toDateInputValue = function () {
 	var local = new Date(this);
 	local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
@@ -107,6 +107,22 @@ export const AddTodo = (targetProject) => {
 					DateF.value.split("-").reverse().join("/")
 				)
 			);
+			targetProject.linkedTodoList.forEach((todo) => {
+				if (todo.priority == "Low") {
+					console.log("l");
+					targetProject.low = 0;
+					targetProject.low++;
+				} else if (todo.priority == "Medium") {
+					console.log("m");
+					targetProject.med = 0;
+					targetProject.med++;
+				} else if (todo.priority == "High") {
+					console.log("h");
+					targetProject.high = 0;
+					targetProject.high++;
+				}
+			});
+			targetProject.total++;
 			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 
 			// console.log(TodoObjectArray);
@@ -145,12 +161,28 @@ export const DeleteTodo = (targetProject) => {
 				target.parentElement.getAttribute("data-id")
 		) {
 			target.parentElement.style.animation = "scaleDownEffect 400ms";
-
+			let priority;
 			const afterDelete = targetProject.linkedTodoList.filter(
 				(todoObject) => todoObject.uuid !== target.getAttribute("data-id")
 			);
 
+			targetProject.linkedTodoList.forEach((todoObject) => {
+				if (todoObject.uuid === target.getAttribute("data-id")) {
+					priority = todoObject.priority;
+				}
+			});
+
+			if (priority == "Low") {
+				targetProject.low--;
+			} else if (priority == "Medium") {
+				targetProject.med--;
+			} else if (priority == "High") {
+				targetProject.high--;
+			}
+
 			targetProject.linkedTodoList = [...afterDelete];
+			targetProject.total--;
+			targetProject.complete = 0;
 			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 			// console.log(TodoObjectArray);
 
@@ -173,9 +205,11 @@ export const MarkAsCompleted = (targetProject) => {
 				if (target.matches("input[type='checkbox']")) {
 					if (target.checked) {
 						todoObject.completedStatus = true;
+						targetProject.complete++;
 						target.parentElement.classList.add("completed");
 					} else {
 						todoObject.completedStatus = false;
+						targetProject.complete--;
 						target.parentElement.classList.remove("completed");
 					}
 				}
@@ -183,8 +217,6 @@ export const MarkAsCompleted = (targetProject) => {
 		});
 
 		localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
-		// console.log(target.checked);
-		// console.log(TodoObjectArray);
 	});
 };
 
@@ -206,6 +238,44 @@ export const EditTodo = (targetProject) => {
 				target.parentElement.style.marginBottom = "";
 
 				target.parentElement.children[1].textContent = form.children[0].value;
+
+				if (
+					target.parentElement.children[2].innerText == "Low" &&
+					form.children[1].value == "Medium"
+				) {
+					targetProject.low--;
+					targetProject.med++;
+				} else if (
+					target.parentElement.children[2].innerText == "Low" &&
+					form.children[1].value == "High"
+				) {
+					targetProject.low--;
+					targetProject.high++;
+				} else if (
+					target.parentElement.children[2].innerText == "Medium" &&
+					form.children[1].value == "Low"
+				) {
+					targetProject.med--;
+					targetProject.low++;
+				} else if (
+					target.parentElement.children[2].innerText == "Medium" &&
+					form.children[1].value == "High"
+				) {
+					targetProject.med--;
+					targetProject.high++;
+				} else if (
+					target.parentElement.children[2].innerText == "High" &&
+					form.children[1].value == "Low"
+				) {
+					targetProject.high--;
+					targetProject.low++;
+				} else if (
+					target.parentElement.children[2].innerText == "High" &&
+					form.children[1].value == "Medium"
+				) {
+					targetProject.high--;
+					targetProject.med++;
+				}
 
 				target.parentElement.children[2].innerText = form.children[1].value;
 				if (target.parentElement.children[2].innerText === "Low") {
@@ -233,13 +303,11 @@ export const EditTodo = (targetProject) => {
 							.join("/");
 					}
 				});
-				localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
-
-				// console.table(TodoObjectArray);
 			} else if (form.classList.contains("hideEdit")) {
 				form.classList.remove("hideEdit");
 				target.parentElement.style.marginBottom = "3rem";
 			}
+			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 		}
 	});
 };
@@ -279,7 +347,6 @@ export const AddProject = () => {
 			);
 			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
 		}
-		// console.table(ProjectObjectArray);
 	});
 };
 
@@ -307,7 +374,6 @@ export const DeleteProject = () => {
 				target.parentElement.remove();
 			}, 250);
 		}
-		// console.table(ProjectObjectArray);
 	});
 };
 
@@ -330,7 +396,6 @@ export const EditTitle = () => {
 			});
 		}
 		localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
-		// console.table(ProjectObjectArray);
 	});
 };
 
@@ -389,10 +454,8 @@ export const Redirect = () => {
 
 					if (todoObject.completedStatus) {
 						TodoItem().classList.add("completed");
-						// console.log("yes");
 					} else {
 						TodoItem().classList.remove("completed");
-						// console.log("no");
 					}
 				});
 			}
