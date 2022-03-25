@@ -84,6 +84,12 @@ export const AddTodo = (targetProject) => {
 
 		if (document.getElementById("task").value === "") {
 			alert("Task field can't be empty");
+		} else if (
+			!document.getElementById("low").checked &&
+			!document.getElementById("medium").checked &&
+			!document.getElementById("high").checked
+		) {
+			alert("Please select priority");
 		} else {
 			let Priority = "Not set";
 			document.getElementsByName("priority").forEach((element) => {

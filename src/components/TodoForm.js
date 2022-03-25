@@ -8,10 +8,13 @@ const TodoForm = () => {
 	const priorityLabel = document.createElement("label");
 	const div = document.createElement("div");
 	const low = document.createElement("input");
+	low.required = true;
 	const lowLabel = document.createElement("label");
 	const medium = document.createElement("input");
+	medium.required = true;
 	const mediumLabel = document.createElement("label");
 	const high = document.createElement("input");
+	high.required = true;
 	const highLabel = document.createElement("label");
 	const spanD = document.createElement("span");
 	const dateLabel = document.createElement("label");
