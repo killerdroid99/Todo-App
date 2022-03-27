@@ -126,12 +126,12 @@ nav {
 		font-weight: bold;
 		border: 2px solid transparent;
 		caret-color: $primary-color-one;
-		border: 2px solid $primary-color-two;
 		border-radius: 5px;
 		transition: 0.4s;
+		border-bottom: 5px solid $primary-color-two;
 		&:focus {
 			outline: none;
-			// border: 2px solid $primary-color-two;
+			border: 2px solid $primary-color-two;
 			border-radius: 15px;
 			box-shadow: 0px 5px 2px $primary-color-two;
 		}
