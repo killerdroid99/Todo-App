@@ -115,25 +115,20 @@ export const AddTodo = (targetProject) => {
 					DateF.value.split("-").reverse().join("/")
 				)
 			);
-			targetProject.linkedTodoList.forEach((todo) => {
-				if (todo.priority == "Low") {
-					console.log("l");
-					targetProject.low = 0;
-					targetProject.low++;
-				} else if (todo.priority == "Medium") {
-					console.log("m");
-					targetProject.med = 0;
-					targetProject.med++;
-				} else if (todo.priority == "High") {
-					console.log("h");
-					targetProject.high = 0;
-					targetProject.high++;
-				}
-			});
+
+			if (Priority == "Low") {
+				console.log("l");
+				targetProject.low++;
+			} else if (Priority == "Medium") {
+				console.log("m");
+				targetProject.med++;
+			} else if (Priority == "High") {
+				console.log("h");
+				targetProject.high++;
+			}
+
 			targetProject.total++;
 			localStorage.setItem("TodoProject", JSON.stringify(ProjectObjectArray));
-
-			// console.log(TodoObjectArray);
 
 			document.querySelector(".overlay").style.animation =
 				"scaleDownEffect 500ms";
